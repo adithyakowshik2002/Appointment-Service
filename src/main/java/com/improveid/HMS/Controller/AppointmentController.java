@@ -48,6 +48,12 @@ public class AppointmentController {
         return new ResponseEntity<>(appointments, HttpStatus.OK);
     }
 
+    @PatchMapping("/reschedule/{appointmentId}")
+    public ResponseEntity<AppointmentResponse> rescheduleAppointment(@PathVariable Long appointmentId,@Valid @RequestBody AppointmentRequest request){
+        AppointmentResponse updated = appointmentService.rescheduleAppointment(appointmentId,request);
+        return new ResponseEntity<>(updated,HttpStatus.OK);
+    }
+
     /*
     @PostMapping("/convert-to-ip")
     public ResponseEntity<Appointment> convertToIp(@Valid @RequestBody ConvertToIpRequest request) {

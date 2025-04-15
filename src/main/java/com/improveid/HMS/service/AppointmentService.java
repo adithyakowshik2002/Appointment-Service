@@ -40,12 +40,12 @@ public class AppointmentService {
            appointment.setStatus(AppointmentStatus.BOOKED);
        }
 
+        appointmentRepository.save(appointment);
+
         return appointmentMapper.toResponse(appointment);
     }
 
-    /**
-     * Get all appointments for a specific doctor on a specific date
-     */
+    // fetch the doctor on a specific date
     public List<AppointmentResponse> getAppointmentsFromDoctorOnDate(Long doctorId, LocalDate date){
 
         log.info("Fetching appointments for doctorId: {} on {}", doctorId, date);
@@ -54,9 +54,37 @@ public class AppointmentService {
         return appointments.stream().map(appointmentMapper::toResponse).collect(Collectors.toList());
     }
 
+    //  it will fetch the patient
     public AppointmentResponse getAppointmentsForPatient(Long patientId) {
         log.info("Fetching appointments for patientId: {}", patientId);
         Appointment appointments = appointmentRepository.findByPatientId(patientId);
         return appointmentMapper.toResponse(appointments);
     }
+
+    //
+    public AppointmentResponse rescheduleAppointment(Long appointmentId,AppointmentRequest request){
+        Appointment appointment = appointmentRepository.findById(appointmentId).orElseThrow(()->new RuntimeException("Appointment not found"));
+
+        boolean isSlotBooked = appointmentRepository.findByDoctorIdAndAppointmentDateAndTimeslot(request.getDoctorId(),request.getAppointmentDate(),request.getTimeslot());
+
+        if(isSlotBooked){
+            throw new RuntimeException("Requested time slot is already booked");
+        }
+
+        appointment.setAppointmentDate(request.getAppointmentDate());
+        appointment.setTimeslot(request.getTimeslot());
+        appointment.setStatus(AppointmentStatus.RESCHEDULED);
+        appointmentRepository.save(appointment);
+
+        return appointmentMapper.toResponse(appointment);
+    }
+
+    public void cancelAppointement(Long appointmentId){
+        Appointment appointment = appointmentRepository.findById(appointmentId).orElseThrow(()-> new RuntimeException());
+    }
+
+
+
+
+
 }
