@@ -1,0 +1,18 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: appointment-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/appointmentdb
+    username: postgres
+    password: 414963
+
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
