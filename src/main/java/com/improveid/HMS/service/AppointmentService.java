@@ -80,7 +80,9 @@ public class AppointmentService {
     }
 
     public void cancelAppointement(Long appointmentId){
-        Appointment appointment = appointmentRepository.findById(appointmentId).orElseThrow(()-> new RuntimeException());
+        Appointment appointment = appointmentRepository.findById(appointmentId).orElseThrow(()-> new RuntimeException("Appointment not found"));
+        appointment.setStatus(AppointmentStatus.CANCELLED);
+        appointmentRepository.save(appointment);
     }
 
 
