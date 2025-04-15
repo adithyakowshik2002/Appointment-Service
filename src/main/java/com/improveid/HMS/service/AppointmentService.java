@@ -6,6 +6,7 @@ import com.improveid.HMS.dto.request.AppointmentRequest;
 import com.improveid.HMS.dto.response.AppointmentResponse;
 import com.improveid.HMS.repository.AppointmentRepository;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
@@ -13,7 +14,7 @@ import java.util.List;
 
 import java.util.stream.Collectors;
 
-@Log4j2
+@Slf4j
 public class AppointmentService {
 
     @Autowired
