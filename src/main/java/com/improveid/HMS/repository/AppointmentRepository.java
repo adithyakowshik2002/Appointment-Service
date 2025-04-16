@@ -13,6 +13,7 @@ import java.util.UUID;
 
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
+
     // To check if a slot is already booked for a doctor on a specific date
     boolean findByDoctorIdAndAppointmentDateAndTimeslot(Long doctorId, LocalDate appointmentDate, LocalTime timeSlot);
 
