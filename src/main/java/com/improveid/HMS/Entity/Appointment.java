@@ -22,6 +22,7 @@ public class Appointment {
 
     @Id
     @Column(name = "appointment_id", updatable = false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long appointmentId;
 
     @Column(name = "doctor_id", nullable = false)
@@ -38,11 +39,13 @@ public class Appointment {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Builder.Default
     private AppointmentType appointmentType =AppointmentType.OP;//Default to OP
 
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Builder.Default
     private AppointmentStatus status =AppointmentStatus.BOOKED;
 
 

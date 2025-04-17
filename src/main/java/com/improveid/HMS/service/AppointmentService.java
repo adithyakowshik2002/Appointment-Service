@@ -1,5 +1,6 @@
 package com.improveid.HMS.service;
 import com.improveid.HMS.AppointmentMapper.AppointmentMapper;
+import com.improveid.HMS.Client.DoctorClient;
 import com.improveid.HMS.Entity.Appointment;
 import com.improveid.HMS.Enum.AppointmentStatus;
 import com.improveid.HMS.dto.request.AppointmentRequest;
@@ -19,12 +20,16 @@ import java.util.stream.Collectors;
 @Service
 public class AppointmentService {
 
+
+
     @Autowired
     private AppointmentRepository appointmentRepository;
 
     @Autowired
     private AppointmentMapper appointmentMapper;
 
+    @Autowired
+    private DoctorClient doctorClient;
     public AppointmentResponse bookAppointment(AppointmentRequest request){
         log.info("Booking appointment for doctorId: {}, patientId: {}, date: {}, time: {}",
                 request.getDoctorId(), request.getPatientId(),
